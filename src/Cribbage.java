@@ -6,7 +6,7 @@ public class Cribbage {
     private List<Card> compHand;
     private int playerScore;
     private int compScore;
-    private final int finalScore = 0;
+    private final int finalScore;
     private Set<Card> comparison;
 
     /**
@@ -14,7 +14,9 @@ public class Cribbage {
      * @param finalScore
      */
     public Cribbage(int finalScore){
-
+        playerScore = 0;
+        compScore = 0;
+        this.finalScore = finalScore;
     }
 
     /**
@@ -30,6 +32,7 @@ public class Cribbage {
      * @return
      */
     public int countPoints(List<Card> hand){
+        int points = 0;
         return -1;
     }
 }
