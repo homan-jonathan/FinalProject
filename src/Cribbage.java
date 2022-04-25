@@ -60,9 +60,15 @@ public class Cribbage {
     }
 
     private int countPairs(LinkedList<Card> hand) {
+        int points = 0;
+        Card compareCard = new Card(hand.remove(0));
+        for (Card card: hand) {
+            if (compareCard.sameValue(card)){
+                points+=2;
+            }
+            compareCard = hand.remove(0);
+        }
 
-
-
-        return -1;
+        return points;
     }
 }

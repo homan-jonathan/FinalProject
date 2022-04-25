@@ -15,6 +15,15 @@ public class Card {
     }
 
     /**
+     * Copy Constructor for Card class
+     * @param other Card to be copied
+     */
+    public Card(Card other) {
+        this.suit = other.suit;
+        this.value = other.value;
+    }
+
+    /**
      * Getter Function for the suit of a card (Hearts, Diamonds, Clubs, Spades)
      * @return suit of this Card
      */
