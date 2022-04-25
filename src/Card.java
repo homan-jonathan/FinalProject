@@ -50,7 +50,7 @@ public class Card {
 
     /**
      * Compares two Cards to see if they have the same suit
-     * @param otherCard
+     * @param otherCard Card being compared
      * @return if the two cards have the same suit
      */
     public boolean sameSuit(Card otherCard){

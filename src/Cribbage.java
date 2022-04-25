@@ -97,9 +97,10 @@ public class Cribbage {
         int points = 0;
         points+=countFlush(hand);
         for (int i = 0; i<cards.size()-1;i++) {
-            Card compareCard = cards.get(i);
+            String compareVal = cards.get(i).getValue();
             for (int j = i+1; j<cards.size(); j++) {
-                if(compareCard.sameValue(cards.get(j))) {
+                String cardVal = cards.get(j).getValue();
+                if(compareVal.equals(cardVal)) {
                     points+=2;
                 }
             }
