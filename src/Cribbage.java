@@ -23,16 +23,43 @@ public class Cribbage {
      * Runs a game of Cribbage until the winning conditions are met
      */
     public void gameLoop(){
+        Scanner scnr = new Scanner(System.in);
         while (playerScore<finalScore&&compScore<finalScore) {
             deck = new Deck();
-            playerHand = new LinkedList<>(deck.dealHand(4));
-            compHand = new LinkedList<>(deck.dealHand(4));
-            playerScore+=countPoints(playerHand);
-            compScore+=countPoints(compHand);
+            playerHand = new LinkedList<>(deck.dealHand(5));
+            compHand = new LinkedList<>(deck.dealHand(5));
+
+            for (Card c: playerHand) {
+                System.out.println(c);
+            }
+            System.out.println("Choose card to discard: (Enter 0-4 to pick first to last card to remove)");
+            System.out.println("Removed: " + playerHand.remove(scnr.nextInt()));
 
 
+            //Second phase of game, need to implement giving each hand more than four cards
+            //and have them choose one card to remove from the deck
+            Card sharedCard = deck.dealCard();
+            playerHand.add(sharedCard);
+            compHand.add(sharedCard);
 
+            int playerPoints = countPoints(playerHand);
+            int compPoints = countPoints(compHand);
+            playerScore+=playerPoints;
+            compScore+=compPoints;
 
+            for (Card c: playerHand) {
+                System.out.print(c + "   ,   ");
+            }
+            System.out.println("Points gained from hand: " + playerPoints);
+
+            for (Card c: compHand) {
+                System.out.print(c + "   ,   ");
+            }
+            System.out.println("Points computer gained: " + compPoints);
+
+            System.out.println("Current Score: " + playerScore + " to " +  compScore);
+            System.out.println("Press any key and enter to continue to next round");
+            scnr.next();
 
         }
 

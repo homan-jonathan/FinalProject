@@ -72,6 +72,6 @@ public class Card {
      */
     @Override
     public String toString() {
-        return (value + " of " + suit);
+        return (suit + " of " + value);
     }
 }
