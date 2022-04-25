@@ -1,13 +1,10 @@
 import java.util.*;
 
 public class Cribbage {
-    private LinkedList<Card> playerHand;
-    private LinkedList<Card> compHand;
     private int playerScore;
     private int compScore;
     private final int finalScore;
     private Set<Card> comparison;
-    private Deck deck;
 
     /**
      * Constructor for the Cribbage class, with predetermined final score
@@ -24,6 +21,9 @@ public class Cribbage {
      */
     public void gameLoop(){
         Scanner scnr = new Scanner(System.in);
+        Deck deck;
+        LinkedList<Card> playerHand;
+        LinkedList<Card> compHand;
         while (playerScore<finalScore&&compScore<finalScore) {
             deck = new Deck();
             playerHand = new LinkedList<>(deck.dealHand(5));
