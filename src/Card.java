@@ -36,7 +36,7 @@ public class Card {
      * @return true, if the two cards have the same suit and value
      */
     public boolean equals(Card otherCard) {
-        return false;
+        return (this.suit.equals(otherCard.suit))&&(this.value.equals(otherCard.value));
     }
 
     /**
@@ -45,7 +45,7 @@ public class Card {
      * @return if the two cards have the same suit
      */
     public boolean sameSuit(Card otherCard){
-        return false;
+        return this.suit.equals(otherCard.suit);
     }
 
     /**
@@ -54,7 +54,7 @@ public class Card {
      * @return if the two cards have the same value
      */
     public boolean sameValue(Card otherCard){
-        return false;
+        return this.value.equals(otherCard.value);
     }
 
     /**
