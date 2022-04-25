@@ -5,6 +5,7 @@ public class Game {
      * @param args
      */
     public static void main(String[] args){
-
+        Cribbage cribbage = new Cribbage(120);
+        cribbage.gameLoop();
     }
 }
