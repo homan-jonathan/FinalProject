@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class Deck {
@@ -17,8 +17,7 @@ public class Deck {
     }
 
     /**
-     * Deals a card to a player
-     * @return Card that is dealt to a player
+     * Swaps two cards in Deck
      */
     public void swap(int numA, int numB) {
         Card tempCard = cards.get(numA);
@@ -39,15 +38,19 @@ public class Deck {
 
     /**
      * Deals a hand to a player
-     * @param amount
+     * @param amount num of Cards in hand
      * @return List of a players hand that is dealt
      */
-    public List<Card> dealHand(int amount){
-        return null;
+    public LinkedList<Card> dealHand(int amount){
+        LinkedList<Card> hand = new LinkedList<>();
+        for (int i = 0; i<amount; i++) {
+            hand.add(dealCard());
+        }
+        return hand;
     }
 
     public Card dealCard() {
-        return null;
+        return cards.remove(0);
     }
 
 
