@@ -29,32 +29,34 @@ public class Cribbage {
             playerHand = new LinkedList<>(deck.dealHand(5));
             compHand = new LinkedList<>(deck.dealHand(5));
 
-            for (Card c: playerHand) {
-                System.out.println(c);
-            }
-            System.out.println("Choose card to discard: (Enter 0-4 to pick first to last card to remove)");
-            System.out.println("Removed: " + playerHand.remove(scnr.nextInt()));
+            System.out.println(Card.printCards(playerHand));
+            System.out.println("Choose card to discard: (Enter 1-5 to pick first to last card to remove)");
+            System.out.println("Removed: " + playerHand.remove(scnr.nextInt()-1));
 
 
-            //Second phase of game, need to implement giving each hand more than four cards
-            //and have them choose one card to remove from the deck
+            //First phase of game, playing cards to get points
+            int playerPoints = playerScore;
+            int compPoints = compScore;
+            peggingRound(new LinkedList<>(playerHand),new LinkedList<>(compHand));
+            System.out.println("You gained: " + (playerScore-playerPoints) + " points");
+            System.out.println("Computer gained: " + (compScore-compPoints) + " points");
+            System.out.println("Enter any key to continue to second phase of round");
+            scnr.next();
+
+            //Second phase of game counting points in each hand with the shared card
             Card sharedCard = deck.dealCard();
             playerHand.add(sharedCard);
             compHand.add(sharedCard);
 
-            int playerPoints = countPoints(playerHand);
-            int compPoints = countPoints(compHand);
+            playerPoints = countPoints(playerHand);
+            compPoints = countPoints(compHand);
             playerScore+=playerPoints;
             compScore+=compPoints;
 
-            for (Card c: playerHand) {
-                System.out.print(c + "   ,   ");
-            }
+            System.out.println(Card.printCards(playerHand));
             System.out.println("Points gained from hand: " + playerPoints);
 
-            for (Card c: compHand) {
-                System.out.print(c + "   ,   ");
-            }
+            System.out.println(Card.printCards(compHand));
             System.out.println("Points computer gained: " + compPoints);
 
             System.out.println("Current Score: " + playerScore + " to " +  compScore);
@@ -80,8 +82,8 @@ public class Cribbage {
      */
     public int countPoints(LinkedList<Card> hand){
         int points = 0;
-        points+=countFlush(hand);
-        points+=countPairs(hand);
+        points+=countFlush(new LinkedList<>(hand));
+        points+=countPairs(new LinkedList<>(hand));
 
 
         return points;
@@ -91,19 +93,17 @@ public class Cribbage {
      * counts the points from pairs
      * @param hand hand to count points
      * @return number of points counted
+     * Does NOT account for three of a kind
      */
     private int countPairs(LinkedList<Card> hand) {
-        ArrayList<Card> cards = new ArrayList<>(hand);
+        HashSet<String> cardVals = new HashSet<>();
         int points = 0;
-        points+=countFlush(hand);
-        for (int i = 0; i<cards.size()-1;i++) {
-            String compareVal = cards.get(i).getValue();
-            for (int j = i+1; j<cards.size(); j++) {
-                String cardVal = cards.get(j).getValue();
-                if(compareVal.equals(cardVal)) {
-                    points+=2;
-                }
+        cardVals.add(hand.remove(0).getValue());
+        for (Card c : hand) {
+            if (cardVals.contains(c.getValue())) {
+                points+=2;
             }
+            cardVals.add(c.getValue());
         }
 
         return points;
@@ -125,6 +125,53 @@ public class Cribbage {
             return 0;
         }
     }
+
+    public void peggingRound(LinkedList<Card> playerHand, LinkedList<Card> compHand) {
+        Scanner scnr = new Scanner(System.in);
+        //False means last player to play was Computer, True means Player
+        boolean lastPlayed = false;
+        Card playedCard;
+        Card topCard = compHand.remove(0);
+        int stackValue = topCard.getPoints();
+
+        while (true) {
+
+            if (lastPlayed&&compHand.size()>0) {
+                playedCard = compHand.remove();
+                stackValue += playedCard.getPoints();
+                if (stackValue%15==0) {
+                    compScore+=2;
+                }
+                if (playedCard.sameValue(topCard)) {
+                    compScore+=2;
+                }
+                topCard = playedCard;
+                lastPlayed = false;
+            } else if (!lastPlayed&&playerHand.size()>0){
+                System.out.println("Last Played: " + topCard);
+                System.out.println("Stack value is : " + stackValue);
+                System.out.println("Choose a card to play: (1 is first Card in Row)");
+                System.out.println(Card.printCards(playerHand));
+                playedCard = playerHand.remove(scnr.nextInt()-1);
+                stackValue += playedCard.getPoints();
+                if (stackValue%15==0) {
+                    playerScore+=2;
+                    System.out.println(stackValue + "! plus 2 points\n");
+                }
+                if (playedCard.sameValue(topCard)) {
+                    playerScore+=2;
+                    System.out.println("Pair! plus 2 points\n");
+                }
+                topCard = playedCard;
+                lastPlayed = true;
+            }
+
+            if (playerHand.size()==0&&compHand.size()==0) {
+                break;
+            }
+        }
+    }
+
 
 
 

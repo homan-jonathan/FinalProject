@@ -10,7 +10,12 @@ public class Deck {
 
     public Deck(){
         for (int i = 0; i< 52; i++){
-            cards.add(new Card(faceValues[i%13], suits[i/13]));
+            if (i%13<10) {
+                cards.add(new Card(faceValues[i%13], suits[i/13], i%13 + 1));
+            } else {
+                cards.add(new Card(faceValues[i%13], suits[i/13], 10));
+            }
+
         }
         cardPosition=0;
         shuffle();
