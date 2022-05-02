@@ -1,15 +1,15 @@
 import java.util.List;
-import java.util.Objects;
 
 public class Card {
-    private String suit;
-    private String value;
-    private int points;
+    private final String suit;
+    private final String value;
+    private final int points;
 
     /**
      * Constructor for Card class
-     * @param suit
-     * @param value
+     * @param suit (Heart, Diamond, Spade, Club) Suit for Card
+     * @param value (A,2,3,4,5,6,7,8,9,10,J,Q,K) Card String Val
+     * @param points (A is 1, 2-9, 10,J,Q,K are 10) integer point val for Card
      */
     public Card(String value, String suit, int points){
         this.suit = suit;
@@ -49,27 +49,10 @@ public class Card {
      */
     public int getPoints() {return points; }
 
-    /**
-     * Compares suit and value of two cards
-     * @param otherCard Card being compared
-     * @return true, if the two cards have the same suit and value
-     */
-    public boolean equals(Card otherCard) {
-        return (this.suit.equals(otherCard.suit))&&(this.value.equals(otherCard.value));
-    }
-
-    /**
-     * Compares two Cards to see if they have the same suit
-     * @param otherCard Card being compared
-     * @return if the two cards have the same suit
-     */
-    public boolean sameSuit(Card otherCard){
-        return this.suit.equals(otherCard.suit);
-    }
 
     /**
      * Compares two Cards to see if they have the same value
-     * @param otherCard
+     * @param otherCard Card to compare with
      * @return if the two cards have the same value
      */
     public boolean sameValue(Card otherCard){

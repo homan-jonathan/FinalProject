@@ -4,11 +4,10 @@ public class Cribbage {
     private int playerScore;
     private int compScore;
     private final int finalScore;
-    private Set<Card> comparison;
 
     /**
      * Constructor for the Cribbage class, with predetermined final score
-     * @param finalScore
+     * @param finalScore Number of points to reach where game will end
      */
     public Cribbage(int finalScore){
         playerScore = 0;
@@ -134,9 +133,9 @@ public class Cribbage {
         Card topCard = compHand.remove(0);
         int stackValue = topCard.getPoints();
 
-        while (true) {
+        while (playerHand.size()==0&&compHand.size()==0) {
 
-            if (lastPlayed&&compHand.size()>0) {
+            if (lastPlayed) {
                 playedCard = compHand.remove();
                 stackValue += playedCard.getPoints();
                 if (stackValue%15==0) {
@@ -147,7 +146,7 @@ public class Cribbage {
                 }
                 topCard = playedCard;
                 lastPlayed = false;
-            } else if (!lastPlayed&&playerHand.size()>0){
+            } else {
                 System.out.println("Last Played: " + topCard);
                 System.out.println("Stack value is : " + stackValue);
                 System.out.println("Choose a card to play: (1 is first Card in Row)");
@@ -166,9 +165,6 @@ public class Cribbage {
                 lastPlayed = true;
             }
 
-            if (playerHand.size()==0&&compHand.size()==0) {
-                break;
-            }
         }
     }
 
