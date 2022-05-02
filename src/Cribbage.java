@@ -31,6 +31,7 @@ public class Cribbage {
             System.out.println(Card.printCards(playerHand));
             System.out.println("Choose card to discard: (Enter 1-5 to pick first to last card to remove)");
             System.out.println("Removed: " + playerHand.remove(scnr.nextInt()-1));
+            compHand.remove(0);
 
 
             //First phase of game, playing cards to get points
@@ -83,6 +84,8 @@ public class Cribbage {
         int points = 0;
         points+=countFlush(new LinkedList<>(hand));
         points+=countPairs(new LinkedList<>(hand));
+        points+=count15(new LinkedList<>(hand));
+        points+=countRuns(new LinkedList<>(hand));
 
 
         return points;
@@ -125,7 +128,63 @@ public class Cribbage {
         }
     }
 
-    public void peggingRound(LinkedList<Card> playerHand, LinkedList<Card> compHand) {
+    /**
+     * Counts how many ways the hand can make 15
+     * 2 points for each time 15 is made
+     * @param hand Hand of Cards to count
+     * @return number of points gained
+     */
+    private int count15(LinkedList<Card> hand) {
+        int points = 0;
+        return points;
+    }
+
+
+    /**
+     * Counts the number of runs made by the hand
+     * each run gains points equal to how many Cards are in the run
+     * i.e (2,8,9,9,10) 2 runs of 3 so 6 points
+     * (6,7,7,7,8) 3 runs of 3 so 9 points
+     * Problematic hands (6,7,7,8,8) should be 4 runs of 3 so 12 points
+     * BUT- Evaluates to 3 runs of 3 so 9 points
+     * @param hand Hand of Cards to count
+     * @return number of points gained
+     */
+    private int countRuns(LinkedList<Card> hand) {
+        TreeSet<Integer> runCounter = new TreeSet<>();
+        int points = 0;
+        int numRemoved = 0;
+        for (Card c: hand) {
+            runCounter.add(c.getPointsReal());
+        }
+
+        //Removes any ints from set that do not have nearby integers
+        for (int i: new TreeSet<>(runCounter)) {
+            if (!(runCounter.contains(i+1)||runCounter.contains(i-1))) {
+                runCounter.remove(i);
+                numRemoved++;
+            }
+        }
+
+        for (int i: runCounter) {
+            //Run of 3
+            if (runCounter.contains(i+1)&&runCounter.contains(i+2)) {
+                points +=3*(hand.size()-runCounter.size()+1-numRemoved);
+            }
+            //Run of 4
+            if (runCounter.contains(i+1)&&runCounter.contains(i+2)&&runCounter.contains(i+3)) {
+                points +=4;
+            }
+        }
+        return points;
+    }
+
+
+
+
+
+
+    private void peggingRound(LinkedList<Card> playerHand, LinkedList<Card> compHand) {
         Scanner scnr = new Scanner(System.in);
         //False means last player to play was Computer, True means Player
         boolean lastPlayed = false;
@@ -133,7 +192,7 @@ public class Cribbage {
         Card topCard = compHand.remove(0);
         int stackValue = topCard.getPoints();
 
-        while (playerHand.size()==0&&compHand.size()==0) {
+        while (!(playerHand.size()==0&&compHand.size()==0)) {
 
             if (lastPlayed) {
                 playedCard = compHand.remove();

@@ -47,9 +47,18 @@ public class Card {
      * Getter functions for points value of card (1 for Ace, 2-9, 10 for 10,J,Q,K
      * @return integer points value of Card
      */
-    public int getPoints() {return points; }
+    public int getPoints() {
+        return Math.min(points, 10);
+    }
 
-
+    /**
+     * Getter for returning integer value representing each unique value
+     * Used for sorting cards in order
+     * @return integer points val of Card (A is 1, 2-10, J is 11, Q is 12, K is 13)
+     */
+    public int getPointsReal() {
+        return points;
+    }
     /**
      * Compares two Cards to see if they have the same value
      * @param otherCard Card to compare with
