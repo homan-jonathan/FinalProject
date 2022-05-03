@@ -87,7 +87,7 @@ public class Card {
         StringBuilder sw = new StringBuilder();
         for (Card c : hand) {
             sw.append(c);
-            sw.append("  ,  ");
+            sw.append(" , ");
         }
         return sw.toString();
     }

@@ -87,7 +87,6 @@ public class Cribbage {
         points+=count15(new LinkedList<>(hand));
         points+=countRuns(new LinkedList<>(hand));
 
-
         return points;
     }
 
@@ -135,8 +134,41 @@ public class Cribbage {
      * @return number of points gained
      */
     private int count15(LinkedList<Card> hand) {
-        int points = 0;
-        return points;
+        int score = 0;
+        if(hand.size() == 5) {
+            int tempPoints = 0;
+            for (Card c : hand) {
+                tempPoints += c.getPointsReal();
+            }
+            if(tempPoints == 15){
+                score += 2;
+            }
+        }
+        Card last = hand.removeLast();
+
+
+
+        for(int i=0; i<hand.size(); i++){
+            int i_score = hand.get(i).getPointsReal();
+            if(last.getPointsReal() + i_score == 15)
+                score += 2;
+
+            for(int j=i+1; j<hand.size(); j++){
+                int j_score = hand.get(j).getPointsReal();
+                if(i_score + j_score + last.getPointsReal() == 15)
+                    score += 2;
+
+                for(int k=j+1; k<hand.size(); k++){
+                    int k_score = hand.get(k).getPointsReal();
+                    if(i_score + j_score + k_score + last.getPointsReal() == 15)
+                        score += 2;
+                }
+            }
+        }
+        if(hand.size() > 1) {
+            return score + count15(hand);
+        }
+        return score;
     }
 
 
@@ -166,7 +198,7 @@ public class Cribbage {
             }
         }
 
-        for (int i: runCounter) {
+        for (int i : runCounter) {
             //Run of 3
             if (runCounter.contains(i+1)&&runCounter.contains(i+2)) {
                 points +=3*(hand.size()-runCounter.size()+1-numRemoved);
