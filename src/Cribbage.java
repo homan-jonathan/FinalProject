@@ -138,29 +138,30 @@ public class Cribbage {
         if(hand.size() == 5) {
             int tempPoints = 0;
             for (Card c : hand) {
-                tempPoints += c.getPointsReal();
+                tempPoints += c.getPoints();
             }
             if(tempPoints == 15){
                 score += 2;
             }
         }
         Card last = hand.removeLast();
+        int lastPoints = last.getPoints();
 
 
 
         for(int i=0; i<hand.size(); i++){
-            int i_score = hand.get(i).getPointsReal();
-            if(last.getPointsReal() + i_score == 15)
+            int i_score = hand.get(i).getPoints();
+            if(lastPoints + i_score == 15)
                 score += 2;
 
             for(int j=i+1; j<hand.size(); j++){
-                int j_score = hand.get(j).getPointsReal();
-                if(i_score + j_score + last.getPointsReal() == 15)
+                int j_score = hand.get(j).getPoints();
+                if(i_score + j_score + lastPoints == 15)
                     score += 2;
 
                 for(int k=j+1; k<hand.size(); k++){
-                    int k_score = hand.get(k).getPointsReal();
-                    if(i_score + j_score + k_score + last.getPointsReal() == 15)
+                    int k_score = hand.get(k).getPoints();
+                    if(i_score + j_score + k_score + lastPoints == 15)
                         score += 2;
                 }
             }
