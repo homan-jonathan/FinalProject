@@ -9,7 +9,7 @@ public class Card {
      * Constructor for Card class
      * @param suit (Heart, Diamond, Spade, Club) Suit for Card
      * @param value (A,2,3,4,5,6,7,8,9,10,J,Q,K) Card String Val
-     * @param points (A is 1, 2-9, 10,J,Q,K are 10) integer point val for Card
+     * @param points (A is 1, 2-10, J is 11, Q is 12, K is 13) integer point val for Card
      */
     public Card(String value, String suit, int points){
         this.suit = suit;
