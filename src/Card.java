@@ -17,15 +17,6 @@ public class Card {
         this.points = points;
     }
 
-    /**
-     * Copy Constructor for Card class
-     * @param other Card to be copied
-     */
-    public Card(Card other) {
-        this.suit = other.suit;
-        this.value = other.value;
-        this.points=other.points;
-    }
 
     /**
      * Getter Function for the suit of a card (Hearts, Diamonds, Clubs, Spades)

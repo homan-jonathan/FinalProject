@@ -3,17 +3,15 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class Deck {
-    static final String[] suits = {"hearts", "diamonds", "clubs", "spades"};
-    static final String[] faceValues = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
-    ArrayList<Card> cards = new ArrayList<>();
-    int cardPosition;
+    private static final String[] suits = {"hearts", "diamonds", "clubs", "spades"};
+    private static final String[] faceValues = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+    private ArrayList<Card> cards = new ArrayList<>();
 
     public Deck(){
         for (int i = 0; i< 52; i++){
             cards.add(new Card(faceValues[i%13], suits[i/13], i%13 + 1));
 
         }
-        cardPosition=0;
         shuffle();
     }
 

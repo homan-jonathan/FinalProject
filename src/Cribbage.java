@@ -80,7 +80,7 @@ public class Cribbage {
      * @param hand hand to count points
      * @return number of points counted
      */
-    public int countPoints(LinkedList<Card> hand){
+    private int countPoints(LinkedList<Card> hand){
         int points = 0;
         points+=countFlush(new LinkedList<>(hand));
         points+=countPairs(new LinkedList<>(hand));
