@@ -23,15 +23,29 @@ public class Cribbage {
         Deck deck;
         LinkedList<Card> playerHand;
         LinkedList<Card> compHand;
+        LinkedList<Card> crib;
+        boolean playerCrib = true;
         while (playerScore<finalScore&&compScore<finalScore) {
             deck = new Deck();
-            playerHand = new LinkedList<>(deck.dealHand(5));
-            compHand = new LinkedList<>(deck.dealHand(5));
+            playerHand = new LinkedList<>(deck.dealHand(6));
+            compHand = new LinkedList<>(deck.dealHand(6));
+            crib = new LinkedList<>();
+
+            System.out.println(Card.printCards(playerHand));
+            System.out.println("Choose card to discard: (Enter 1-6 to pick first to last card to remove)");
+            Card temp = playerHand.remove(scnr.nextInt()-1);
+            System.out.println("Removed: " + temp);
+            crib.add(temp);
 
             System.out.println(Card.printCards(playerHand));
             System.out.println("Choose card to discard: (Enter 1-5 to pick first to last card to remove)");
-            System.out.println("Removed: " + playerHand.remove(scnr.nextInt()-1));
-            compHand.remove(0);
+            temp = playerHand.remove(scnr.nextInt()-1);
+            System.out.println("Removed: " + temp);
+            crib.add(temp);
+
+
+            crib.add(compHand.remove(0));
+            crib.add(compHand.remove(0));
 
 
             //First phase of game, playing cards to get points
@@ -40,28 +54,42 @@ public class Cribbage {
             peggingRound(new LinkedList<>(playerHand),new LinkedList<>(compHand));
             System.out.println("You gained: " + (playerScore-playerPoints) + " points");
             System.out.println("Computer gained: " + (compScore-compPoints) + " points");
-            System.out.println("Enter any key to continue to second phase of round");
+            System.out.println("Enter any key and enter to continue to second phase of round");
             scnr.next();
 
             //Second phase of game counting points in each hand with the shared card
             Card sharedCard = deck.dealCard();
             playerHand.add(sharedCard);
             compHand.add(sharedCard);
+            crib.add(sharedCard);
 
             playerPoints = countPoints(playerHand);
             compPoints = countPoints(compHand);
+            int cribPoints = countPoints(crib);
             playerScore+=playerPoints;
             compScore+=compPoints;
 
             System.out.println(Card.printCards(playerHand));
-            System.out.println("Points gained from hand: " + playerPoints);
+            System.out.println("Points gained from hand: " + playerPoints + "\n");
 
             System.out.println(Card.printCards(compHand));
-            System.out.println("Points computer gained: " + compPoints);
+            System.out.println("Points computer gained: " + compPoints+ "\n");
+
+
+            System.out.println(Card.printCards(crib));
+            if (playerCrib) {
+                System.out.println("Points gained from your crib: " + cribPoints+"\n");
+                playerScore+=cribPoints;
+                playerCrib = false;
+            } else {
+                System.out.println("Points computer gained from crib: " + cribPoints+"\n");
+                compScore+=cribPoints;
+                playerCrib = true;
+            }
 
             System.out.println("Current Score: " + playerScore + " to " +  compScore);
             System.out.println("Press any key and enter to continue to next round");
-            scnr.next();
+            scnr.nextLine();
 
         }
 
