@@ -1,5 +1,10 @@
 import java.util.*;
 
+/**
+ * @Author Garrett Martin and Jonathan Homan
+ * Holds gameLoop method allowing for games of Cribbage to be played along with complementary to run the game
+ * Differences to cribbage in pegging round and minor point calculation differences however game still plays the same
+ */
 public class Cribbage {
     private int playerScore;
     private int compScore;
@@ -31,6 +36,14 @@ public class Cribbage {
             compHand = new LinkedList<>(deck.dealHand(6));
             crib = new LinkedList<>();
 
+
+            if (playerCrib) {
+                System.out.println("The discards will go in your crib");
+            } else {
+                System.out.println("The discards will go in the opponent crib");
+            }
+            // Allows Player to choose which 2 cards to discard, which then make up the crib
+            // along with the discards from the AI
             System.out.println(Card.printCards(playerHand));
             System.out.println("Choose card to discard: (Enter 1-6 to pick first to last card to remove)");
             Card temp = playerHand.remove(scnr.nextInt()-1);
@@ -43,7 +56,7 @@ public class Cribbage {
             System.out.println("Removed: " + temp);
             crib.add(temp);
 
-
+            //Removes first 2 cards from AI hand, no deterministic decision
             crib.add(compHand.remove(0));
             crib.add(compHand.remove(0));
 
@@ -75,7 +88,7 @@ public class Cribbage {
             System.out.println(Card.printCards(compHand));
             System.out.println("Points computer gained: " + compPoints+ "\n");
 
-
+            // Determines whose crib it is and gives them the points from it
             System.out.println(Card.printCards(crib));
             if (playerCrib) {
                 System.out.println("Points gained from your crib: " + cribPoints+"\n");
@@ -287,8 +300,4 @@ public class Cribbage {
 
         }
     }
-
-
-
-
 }

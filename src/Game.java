@@ -1,3 +1,7 @@
+/**
+ * @Author Garrett Martin and Jonathan Homan
+ * Class with main method to start game
+ */
 public class Game {
 
     /**

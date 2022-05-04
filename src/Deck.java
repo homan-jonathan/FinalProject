@@ -2,6 +2,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
+/**
+ * @Author Garrett Martin and Jonathan Homan
+ * Class that Holds a Standard deck of 52 cards and allows for them to be dealt in hands and shuffled
+ */
 public class Deck {
     private static final String[] suits = {"hearts", "diamonds", "clubs", "spades"};
     private static final String[] faceValues = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
